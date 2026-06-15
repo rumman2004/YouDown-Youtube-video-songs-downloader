@@ -52,6 +52,21 @@ const limiter = rateLimit({
 app.use('/api', limiter);
 
 // --- Routes -----------------------------------------------------------------
+// Friendly landing response so hitting the API root directly isn't confusing.
+app.get('/', (_req, res) => {
+  res.json({
+    name: 'YouDown API',
+    status: 'running',
+    message:
+      'This is the backend API. Open the frontend at http://localhost:5173 to use the app.',
+    endpoints: {
+      health: 'GET /api/health',
+      info: 'POST /api/info',
+      download: 'POST /api/download',
+    },
+  });
+});
+
 app.get('/api/health', (_req, res) => res.json({ status: 'ok' }));
 app.use('/api/info', infoRoute);
 app.use('/api/download', downloadRoute);
