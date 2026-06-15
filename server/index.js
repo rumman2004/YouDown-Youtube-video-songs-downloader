@@ -15,7 +15,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const PORT = process.env.PORT || 3001;
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 const DOWNLOADS_DIR = path.join(__dirname, 'downloads');
 
 const app = express();
@@ -26,10 +25,14 @@ if (!fs.existsSync(DOWNLOADS_DIR)) {
 }
 
 // --- Middleware -------------------------------------------------------------
+// Universal CORS: allow requests from any origin. The download endpoint sets
+// Content-Disposition / Content-Length, so we expose them for the browser to
+// read the filename and total size during a cross-origin fetch.
 app.use(
   cors({
-    origin: CLIENT_ORIGIN,
+    origin: '*',
     methods: ['GET', 'POST'],
+    exposedHeaders: ['Content-Disposition', 'Content-Length'],
   })
 );
 app.use(express.json({ limit: '1mb' }));
@@ -103,7 +106,7 @@ async function start() {
 
   const server = app.listen(PORT, () => {
     console.log(`\n  ✓ Server running at http://localhost:${PORT}`);
-    console.log(`  ✓ Accepting requests from ${CLIENT_ORIGIN}\n`);
+    console.log(`  ✓ CORS: accepting requests from any origin (*)\n`);
   });
 
   const shutdown = (signal) => {

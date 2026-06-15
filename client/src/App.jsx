@@ -12,6 +12,9 @@ import Safety from './components/Safety';
 import FAQ from './components/FAQ';
 import { gsap, smoothScrollTo } from './lib/gsap';
 
+// Backend base URL. Empty string falls back to the Vite dev proxy (/api).
+const API_BASE = import.meta.env.VITE_API_BASE_URL || '';
+
 export default function App() {
   const contentRef = useRef(null);
   const [url, setUrl] = useState('');
@@ -63,7 +66,7 @@ export default function App() {
     setFetching(true);
     setVideoInfo(null);
     try {
-      const res = await fetch('/api/info', {
+      const res = await fetch(`${API_BASE}/api/info`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ url: url.trim() }),
@@ -102,7 +105,7 @@ export default function App() {
     setEta(null);
 
     try {
-      const res = await fetch('/api/download', {
+      const res = await fetch(`${API_BASE}/api/download`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
