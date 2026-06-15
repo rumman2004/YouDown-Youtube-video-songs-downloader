@@ -1,0 +1,110 @@
+@import 'tailwindcss';
+
+/*
+ * Light theme palette derived from the brand colors:
+ *   Cyprus    #004643  (deep teal — primary, headings, text)
+ *   Sand Dune #F0EDE5  (warm cream — page background)
+ * with complementary accents that pair well with teal:
+ *   Gold      #F9BC60  (call-to-action highlight)
+ *   Mint      #ABD1C6  (soft secondary surfaces)
+ *   Coral     #E16162  (errors / warnings)
+ */
+@theme {
+  --color-cyprus: #004643;
+  --color-cyprus-600: #0a5c58;
+  --color-cyprus-700: #013b38;
+  --color-sand: #f0ede5;
+  --color-sand-200: #e6e1d4;
+  --color-gold: #f9bc60;
+  --color-gold-600: #f4a93c;
+  --color-mint: #abd1c6;
+  --color-mint-200: #cfe6df;
+  --color-coral: #e16162;
+
+  --color-ink: #1d2b2a; /* primary body text */
+  --color-ink-soft: #4f615f; /* muted body text */
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+
+  --animate-fade-in: fade-in 0.5s ease-out both;
+  --animate-slide-in: slide-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(120%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  color: var(--color-ink);
+  background:
+    radial-gradient(900px 500px at 8% -8%, rgba(171, 209, 198, 0.5), transparent 60%),
+    radial-gradient(800px 500px at 100% 0%, rgba(249, 188, 96, 0.18), transparent 55%),
+    var(--color-sand);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Reusable elevated card surface for the light theme. */
+.card {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 70, 67, 0.12);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 70, 67, 0.08);
+}
+
+.card-solid {
+  background: #ffffff;
+  border: 1px solid rgba(0, 70, 67, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 70, 67, 0.07);
+}
+
+.animate-fade-in {
+  animation: var(--animate-fade-in);
+}
+
+.animate-slide-in {
+  animation: var(--animate-slide-in);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 70, 67, 0.35);
+  border-radius: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
